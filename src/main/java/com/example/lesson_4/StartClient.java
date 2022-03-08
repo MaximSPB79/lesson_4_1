@@ -7,10 +7,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
 import java.io.IOException;
-import java.net.Socket;
 
 public class StartClient extends Application {
     @Override
@@ -21,10 +18,8 @@ public class StartClient extends Application {
         stage.setScene(scene);
         stage.setAlwaysOnTop(true);
         stage.show();
-
         Network network = new Network();
         ChatController chatController = fxmlLoader.getController();
-
         chatController.setNetwork(network);
 
         network.connect();

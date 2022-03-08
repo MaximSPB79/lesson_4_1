@@ -35,14 +35,14 @@ public class ChatController {
     }
 
     @FXML
-    void sendingMessage() {
+    void sendingMessage() { // обрабатываем сообщение введенное в строчке формочки
         String message = inputField.getText().trim();
         inputField.clear();
         if (message.isBlank()) {
             return;
         }
         network.sendMessage(message);
-       // appendMessage(message);
+        // appendMessage(message);
     }
 
     public void appendMessage(String message) {
@@ -56,7 +56,6 @@ public class ChatController {
         sendButton.setOnAction(event -> sendingMessage());
         inputField.setOnAction(event -> sendingMessage());
     }
-
 }
 
 

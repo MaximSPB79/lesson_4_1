@@ -1,6 +1,7 @@
 package com.example.lesson_4.models;
 
 import com.example.lesson_4.controller.ChatController;
+import lesson_6.EchoServer;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -11,7 +12,7 @@ public class Network {
 
     private DataInputStream in;
     private DataOutputStream out;
-
+    private EchoServer echoServer = new EchoServer();
     private final String host;
     private final int port;
     private final String DEFAULT_HOST = "localhost";
@@ -42,7 +43,7 @@ public class Network {
         return out;
     }
 
-    public void sendMessage(String message) {
+    public void sendMessage(String message) { // отправляем сообщение на сервер
 
         try {
             out.writeUTF(message);
@@ -56,8 +57,8 @@ public class Network {
         Thread t = new Thread(() -> {
             try {
                 while (true) {
-                    String message = in.readUTF();
-                    chatController.appendMessage("Я: " + message);
+                    String message = in.readUTF(); // принимаем сообщение с чат контроллера
+                    chatController.appendMessage(message);
                 }
             } catch (IOException e) {
                 e.printStackTrace();
