@@ -8,6 +8,7 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
 
+
 public class ClientHandler {
 
     private final static String AUTH_CMD_PREFIX = "/auth";
@@ -18,6 +19,7 @@ public class ClientHandler {
     private final static String PRIVAT_MSG_CMD_PREFIX = "/pMsg";
     private final static String STOP_SERVER_CMD_PREFIX = "/stop";
     private final static String END_CLIENT_CMD_PREFIX = "/end";
+
 
     private MyServer myServer;
     private Socket clientSocket;
@@ -97,18 +99,35 @@ public class ClientHandler {
             } else if (message.startsWith(END_CLIENT_CMD_PREFIX)) {
                 return;
             } else if (message.startsWith(PRIVAT_MSG_CMD_PREFIX)) {
-                // домашнее задание
+                 messagePrivateProcessing(message);
             } else {
                 myServer.broadcastMessage(message, this);
             }
+
         }
     }
+
+    private void  messagePrivateProcessing(String message) throws IOException {
+        String[] part = message.split("\\s");
+        String nick = part[1];
+        for (ClientHandler o : myServer.getClients()) {
+            if (o.getUsername().equals(nick)) {
+                o.sendPrivatMessage(getUsername(), message);
+            }
+        }
+    }
+
 
     public void sendMessage(String sender, String message) throws IOException {
 
         out.writeUTF(String.format("%s %s %s", CLIENT_MSG_CMD_PREFIX, sender, message));
     }
 
+    public void sendPrivatMessage(String sender, String message) throws IOException {
+
+        out.writeUTF(String.format("%s %s", sender, message));
+    }
+    
     public String getUsername() {
         return username;
     }

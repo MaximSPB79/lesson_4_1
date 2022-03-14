@@ -75,7 +75,11 @@ public class MyServer {
             if (client == sender) {
                 continue;
             }
-            client.sendMessage(sender.getUsername(),message);
+            client.sendMessage(sender.getUsername(), message);
         }
+    }
+
+    public List<ClientHandler> getClients() {
+        return clients;
     }
 }
