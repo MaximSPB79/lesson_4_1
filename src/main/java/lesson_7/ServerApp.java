@@ -11,7 +11,7 @@ public class ServerApp {
     public static void main(String[] args) {
 
         try {
-            new MyServer(DEFAULT_PORT).start();
+            new MyServer(DEFAULT_PORT).start(); // создаем экземпляр сервера и запускаем его
         } catch (IOException e) {
             e.printStackTrace();
         }
